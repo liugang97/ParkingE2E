@@ -1,59 +1,105 @@
 ##################### Dataset Options #####################
+# 数据集的根目录
 data_dir: './e2e_dataset/'
+# 训练数据所在的子目录
 training_dir: "train"
+# 验证数据所在的子目录
 validation_dir: "val"
 
 ##################### Basic Options #####################
+# 数据模式，表示使用真实场景数据
 data_mode: "real_scene"
+# 使用的GPU数量
 num_gpus: 1
+# 指定使用的CUDA设备索引
 cuda_device_index: "0"
+# 日志文件的根目录
 log_root_dir: './log/'
+# 检查点文件的根目录
 checkpoint_root_dir: './ckpt'
+# 每隔多少步记录一次日志
 log_every_n_steps: 10
+# 每隔多少个epoch进行一次验证
 check_val_every_n_epoch: 5
+# 训练的总epoch数
 epochs: 40
+# 学习率
 learning_rate: 0.0001
+# 权重衰减系数
 weight_decay: 0.00001
+# 每个批次的样本数量
 batch_size: 1
+# 数据加载时使用的工作线程数
 num_workers: 8
+# 模型恢复路径（如果需要从某个检查点恢复训练）
 # resume_path: ""
 
 ##################### Data Process #####################
+# 自回归点的数量
 autoregressive_points: 30
+# 轨迹下采样的步长
 traj_downsample_stride: 3
+# 每个样本包含的项目数量
 item_number: 2
+# 令牌的总数量
 token_nums: 1200
+# 附加令牌的数量
 append_token: 3
+# 坐标的最大值
 xy_max: 12
+# 数据处理的维度
 process_dim: [256, 256]
 
 ##################### BEV Encoder #####################
+# BEV编码器的输入通道数
 bev_encoder_in_channel: 64
+# BEV的x轴边界
 bev_x_bound: [-10.0, 10.0, 0.1]
+# BEV的y轴边界
 bev_y_bound: [-10.0, 10.0, 0.1]
+# BEV的z轴边界
 bev_z_bound: [-10.0, 10.0, 20.0]
+# 深度边界
 d_bound: [0.5, 12.5, 0.25]
+# 最终输出的维度
 final_dim: [256, 256]
+# BEV的下采样率
 bev_down_sample: 8
+# 使用的骨干网络
 backbone: "efficientnet-b4"
 
 ##################### Target #####################
+# 是否向目标添加噪声
 add_noise_to_target: True
+# 目标噪声的阈值
 target_noise_threshold: 0.5
+# 目标的范围
 target_range: 1.4
+# 是否使用模糊目标
 use_fuzzy_target: False
 
 ##################### BEV Query #####################
+# 融合方法
 fusion_method: "query"
+# 查询编码器的维度
 query_en_dim: 256
+# 查询编码器的头数
 query_en_heads: 4
+# 查询编码器的层数
 query_en_layers: 4
+# 查询编码器的dropout率
 query_en_dropout: 0.05
+# 查询编码器的BEV长度
 query_en_bev_length: 256
 
 ##################### Decoder #####################
+# 解码器的方法
 decoder_method: "transformer"
+# 解码器的维度
 tf_de_dim: 256
+# 解码器的头数
 tf_de_heads: 4
+# 解码器的层数
 tf_de_layers: 4
+# 解码器的dropout率
 tf_de_dropout: 0.05

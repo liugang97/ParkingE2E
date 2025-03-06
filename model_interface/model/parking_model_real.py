@@ -15,17 +15,17 @@ class ParkingModelReal(nn.Module):
         self.cfg = cfg
 
         # Camera Encoder
-        self.lss_bev_model = LssBevModel(self.cfg)
-        self.image_res_encoder = BevEncoder(in_channel=self.cfg.bev_encoder_in_channel)
+        self.lss_bev_model = LssBevModel(self.cfg) # 负责将摄像头图像转换为鸟瞰图（BEV，Bird's Eye View）特征。这一步通常涉及到将多视角的图像信息整合成一个统一的视角，以便后续处理。
+        self.image_res_encoder = BevEncoder(in_channel=self.cfg.bev_encoder_in_channel)# 进一步处理鸟瞰图特征，提取更高层次的特征信息。in_channel 参数指定了输入通道数，通常与输入图像的特征维度相关。
 
         # Target Encoder
-        self.target_res_encoder = BevEncoder(in_channel=1)
+        self.target_res_encoder = BevEncoder(in_channel=1) # 另一个 BevEncoder 实例，专门用于处理目标特征。
 
         # BEV Query
-        self.bev_query = BevQuery(self.cfg)
+        self.bev_query = BevQuery(self.cfg) # 这个模块负责从鸟瞰图特征中提取有用的信息。它可能使用注意力机制（如 Transformer）来关注特定的空间区域或特征。通过查询机制，模型可以动态地选择和聚合特征，以便更好地理解环境和目标。
 
         # Trajectory Decoder
-        self.trajectory_decoder = self.get_trajectory_decoder()
+        self.trajectory_decoder = self.get_trajectory_decoder()# 负责将编码和查询得到的特征信息解码为具体的车辆轨迹。这一步通常涉及到将高维特征转换为低维的控制指令或路径点。
 
     def forward(self, data):
         # Encoder

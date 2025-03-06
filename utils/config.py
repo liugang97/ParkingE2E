@@ -107,12 +107,21 @@ def get_exp_name():
     return exp_name
 
 def get_inference_config_obj(config_path: str):
+    # 打开推理配置文件
     with open(config_path, 'r') as yaml_file:
         try:
+            # 读取并解析YAML文件内容
             config_yaml = yaml.safe_load(yaml_file)
+            # 创建InferenceConfiguration对象
             inference_config_obj = InferenceConfiguration(**config_yaml)
         except yaml.YAMLError:
+            # 如果读取YAML文件失败，记录异常
             logger.exception("Open {} failed!", config_path)
+    
+    # 获取训练配置文件的路径
     training_config_path = os.path.join(os.path.dirname(config_path), "{}.yaml".format(inference_config_obj.training_config))
+    # 获取训练配置对象
     inference_config_obj.train_meta_config = get_train_config_obj(training_config_path)
+    
+    # 返回推理配置对象
     return inference_config_obj
